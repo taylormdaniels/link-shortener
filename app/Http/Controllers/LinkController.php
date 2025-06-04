@@ -21,13 +21,22 @@ class LinkController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['url'=>'required|url']);
+        $request->validate([
+            'url'  => 'required|url',
+            'slug' => ['nullable','string','min:3','max:32','regex:/^[a-z0-9-]+$/i'],
+        ]);
+
+        if ($request->filled('slug') && Link::where('slug', $request->slug)->exists()) {
+            return response()->json(['error' => 'slug_taken'], 409);
+        }
+
         $link = Link::create([
             'original_url' => $request->url,
-            'code'         => Str::random(6),
+            'slug'         => $request->slug ?: Str::random(6),
         ]);
+
         return response()->json([
-            'short' => url($link->code),
+            'short' => url($link->slug),
             'link'  => $link,
         ], 201);
     }
@@ -36,9 +45,9 @@ class LinkController extends Controller
      * Redirect using link's code
      */
 
-    public function redirect($code)
+    public function redirect($slug)
     {
-        $link = Link::where('code', $code)->firstOrFail();
+        $link = Link::where('slug', $slug)->firstOrFail();
 
         $link->clicks()->create([
             'ip'    => request()->ip(),
