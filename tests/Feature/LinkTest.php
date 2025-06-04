@@ -9,7 +9,7 @@ use App\Models\Link;
 
 class LinkTest extends TestCase
 {
-  public function it_shortens_and_redirects(){
+  public function test_it_shortens_and_redirects(){
     $response = $this->postJson('/api/links', ['url' => 'https://laravel.com']);
     $response->assertCreated()->json('short');
 
