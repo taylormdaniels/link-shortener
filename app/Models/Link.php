@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Link extends Model
 {
-    protected $fillable = ['code', 'original_url'];
+    protected $fillable = ['slug', 'original_url'];
 
     public function clicks(){
         return $this->hasMany(Click::class);

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('links', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 8)->unique();
+            $table->string('slug', 32)->unique();
             $table->text('original_url');
             $table->timestamps();
         });

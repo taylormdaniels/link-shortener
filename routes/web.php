@@ -7,4 +7,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/{code}', [LinkController::class, 'redirect'])->name('link.redirect');
+Route::get('/{slug}', [LinkController::class, 'redirect'])->name('link.redirect');
