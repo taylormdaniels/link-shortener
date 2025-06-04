@@ -9,6 +9,7 @@
     <h1>Link Shortener</h1>
     <form id="shorten-form">
         <input type="url" name="url" placeholder="https://example.com" required>
+        <input type="text" name="slug">
         <button type="submit">Shorten</button>
     </form>
     <p id="result"></p>
@@ -22,7 +23,7 @@
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({ url: form.url.value })
+                body: JSON.stringify({ url: form.url.value, slug: form.slug.value })
             });
             const out = document.getElementById('result');
             if (res.ok) {
